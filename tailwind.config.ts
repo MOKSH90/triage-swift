@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					hover: 'hsl(var(--primary-hover))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -51,6 +52,25 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				triage: {
+					1: 'hsl(var(--triage-1))',
+					2: 'hsl(var(--triage-2))',
+					3: 'hsl(var(--triage-3))',
+					4: 'hsl(var(--triage-4))',
+					5: 'hsl(var(--triage-5))'
+				},
+				department: {
+					icu: 'hsl(var(--dept-icu))',
+					emergency: 'hsl(var(--dept-emergency))',
+					cardiology: 'hsl(var(--dept-cardiology))',
+					general: 'hsl(var(--dept-general))',
+					surgery: 'hsl(var(--dept-surgery))'
+				},
+				status: {
+					available: 'hsl(var(--status-available))',
+					occupied: 'hsl(var(--status-occupied))',
+					maintenance: 'hsl(var(--status-maintenance))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
