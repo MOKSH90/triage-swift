@@ -134,9 +134,9 @@ const Dashboard = () => {
   const filteredPatients = mockPatients.filter(patient => {
     const matchesSearch = patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          patient.id.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesTriage = !filterTriage || patient.triageLevel.toString() === filterTriage;
-    const matchesDepartment = !filterDepartment || patient.department === filterDepartment;
-    const matchesStatus = !filterStatus || patient.status === filterStatus;
+    const matchesTriage = !filterTriage || filterTriage === "all" || patient.triageLevel.toString() === filterTriage;
+    const matchesDepartment = !filterDepartment || filterDepartment === "all" || patient.department === filterDepartment;
+    const matchesStatus = !filterStatus || filterStatus === "all" || patient.status === filterStatus;
     
     return matchesSearch && matchesTriage && matchesDepartment && matchesStatus;
   });
@@ -247,7 +247,7 @@ const Dashboard = () => {
                       <SelectValue placeholder="Triage Level" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Levels</SelectItem>
+                      <SelectItem value="all">All Levels</SelectItem>
                       <SelectItem value="1">Level 1 - Critical</SelectItem>
                       <SelectItem value="2">Level 2 - High</SelectItem>
                       <SelectItem value="3">Level 3 - Medium</SelectItem>
@@ -260,7 +260,7 @@ const Dashboard = () => {
                       <SelectValue placeholder="Department" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Departments</SelectItem>
+                      <SelectItem value="all">All Departments</SelectItem>
                       <SelectItem value="ICU">ICU</SelectItem>
                       <SelectItem value="Emergency">Emergency</SelectItem>
                       <SelectItem value="Cardiology">Cardiology</SelectItem>
@@ -272,7 +272,7 @@ const Dashboard = () => {
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Status</SelectItem>
+                      <SelectItem value="all">All Status</SelectItem>
                       <SelectItem value="waiting">Waiting</SelectItem>
                       <SelectItem value="in-treatment">In Treatment</SelectItem>
                       <SelectItem value="discharged">Discharged</SelectItem>
