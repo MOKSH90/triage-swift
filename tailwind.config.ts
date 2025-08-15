@@ -53,24 +53,25 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				triage: {
-					1: 'hsl(var(--triage-1))',
-					2: 'hsl(var(--triage-2))',
-					3: 'hsl(var(--triage-3))',
-					4: 'hsl(var(--triage-4))',
-					5: 'hsl(var(--triage-5))'
+				dosha: {
+					vata: 'hsl(var(--dosha-vata))',
+					pitta: 'hsl(var(--dosha-pitta))',
+					kapha: 'hsl(var(--dosha-kapha))'
 				},
-				department: {
-					icu: 'hsl(var(--dept-icu))',
-					emergency: 'hsl(var(--dept-emergency))',
-					cardiology: 'hsl(var(--dept-cardiology))',
-					general: 'hsl(var(--dept-general))',
-					surgery: 'hsl(var(--dept-surgery))'
+				treatment: {
+					herbs: 'hsl(var(--treatment-herbs))',
+					oils: 'hsl(var(--treatment-oils))',
+					yoga: 'hsl(var(--treatment-yoga))',
+					diet: 'hsl(var(--treatment-diet))',
+					meditation: 'hsl(var(--treatment-meditation))',
+					massage: 'hsl(var(--treatment-massage))'
 				},
-				status: {
-					available: 'hsl(var(--status-available))',
-					occupied: 'hsl(var(--status-occupied))',
-					maintenance: 'hsl(var(--status-maintenance))'
+				priority: {
+					immediate: 'hsl(var(--priority-immediate))',
+					urgent: 'hsl(var(--priority-urgent))',
+					moderate: 'hsl(var(--priority-moderate))',
+					routine: 'hsl(var(--priority-routine))',
+					wellness: 'hsl(var(--priority-wellness))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

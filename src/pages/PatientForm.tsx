@@ -9,19 +9,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { ArrowLeft, User, Activity, Stethoscope, Brain } from "lucide-react";
+import { ArrowLeft, User, Leaf, Eye, Heart, Brain } from "lucide-react";
 
 interface PatientData {
   name: string;
   age: string;
   gender: string;
+  constitution: string;
   symptoms: string[];
-  bloodPressureSystolic: string;
-  bloodPressureDiastolic: string;
-  spo2: string;
-  heartRate: string;
-  temperature: string;
-  sugarLevel: string;
+  pulse: string;
+  tongue: string;
+  digestion: string;
+  sleep: string;
+  stress: string;
+  appetite: string;
+  bowelMovement: string;
+  urination: string;
+  energy: string;
+  mood: string;
+  skinCondition: string;
   symptomsText: string;
 }
 
@@ -31,19 +37,27 @@ const PatientForm = () => {
     name: "",
     age: "",
     gender: "",
+    constitution: "",
     symptoms: [],
-    bloodPressureSystolic: "",
-    bloodPressureDiastolic: "",
-    spo2: "",
-    heartRate: "",
-    temperature: "",
-    sugarLevel: "",
+    pulse: "",
+    tongue: "",
+    digestion: "",
+    sleep: "",
+    stress: "",
+    appetite: "",
+    bowelMovement: "",
+    urination: "",
+    energy: "",
+    mood: "",
+    skinCondition: "",
     symptomsText: ""
   });
 
-  const commonSymptoms = [
-    "Chest Pain", "Shortness of Breath", "Fever", "Headache", "Nausea", "Vomiting",
-    "Dizziness", "Fatigue", "Abdominal Pain", "Back Pain", "Cough", "Difficulty Swallowing"
+  const ayurvedicSymptoms = [
+    "Anxiety & Restlessness", "Joint Pain & Stiffness", "Digestive Issues", "Constipation", 
+    "Insomnia", "Dry Skin", "Headaches", "Irregular Appetite", "Bloating & Gas", 
+    "Acid Reflux", "Excessive Heat", "Skin Rashes", "Hair Loss", "Excessive Sweating",
+    "Heavy Feeling", "Congestion", "Lethargy", "Weight Gain", "Cold Hands/Feet", "Depression"
   ];
 
   const handleSymptomChange = (symptom: string, checked: boolean) => {
@@ -64,8 +78,8 @@ const PatientForm = () => {
       return;
     }
 
-    if (!formData.heartRate || !formData.bloodPressureSystolic || !formData.spo2 || !formData.temperature) {
-      toast.error("Please provide all vital signs");
+    if (!formData.pulse || !formData.tongue || !formData.constitution) {
+      toast.error("Please provide essential Ayurvedic assessments");
       return;
     }
 
@@ -88,7 +102,7 @@ const PatientForm = () => {
             </Button>
             <div className="flex items-center space-x-2">
               <User className="h-6 w-6 text-primary" />
-              <h1 className="text-2xl font-bold text-foreground">Patient Intake Form</h1>
+              <h1 className="text-2xl font-bold text-foreground">Ayurvedic Patient Assessment</h1>
             </div>
           </div>
         </div>
@@ -106,11 +120,11 @@ const PatientForm = () => {
                   <span>Patient Information</span>
                 </CardTitle>
                 <CardDescription>
-                  Basic patient demographics and contact information
+                  Basic patient information and constitutional assessment
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name *</Label>
                     <Input
@@ -147,126 +161,152 @@ const PatientForm = () => {
                       </SelectContent>
                     </Select>
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="constitution">Prakriti (Constitution) *</Label>
+                    <Select value={formData.constitution} onValueChange={(value) => setFormData(prev => ({ ...prev, constitution: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select constitution" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="vata">Vata (Air + Space)</SelectItem>
+                        <SelectItem value="pitta">Pitta (Fire + Water)</SelectItem>
+                        <SelectItem value="kapha">Kapha (Earth + Water)</SelectItem>
+                        <SelectItem value="vata-pitta">Vata-Pitta</SelectItem>
+                        <SelectItem value="pitta-kapha">Pitta-Kapha</SelectItem>
+                        <SelectItem value="vata-kapha">Vata-Kapha</SelectItem>
+                        <SelectItem value="tridosha">Tridosha (Balanced)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Vital Signs */}
+            {/* Ayurvedic Assessment */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <Activity className="h-5 w-5 text-accent" />
-                  <span>Vital Signs</span>
+                  <Eye className="h-5 w-5 text-treatmentHerbs" />
+                  <span>Ayurvedic Assessment</span>
                 </CardTitle>
                 <CardDescription>
-                  Current patient vital measurements
+                  Traditional Ayurvedic examination and observation
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="bp-systolic">Blood Pressure *</Label>
-                    <div className="flex space-x-2">
-                      <Input
-                        id="bp-systolic"
-                        type="number"
-                        value={formData.bloodPressureSystolic}
-                        onChange={(e) => setFormData(prev => ({ ...prev, bloodPressureSystolic: e.target.value }))}
-                        placeholder="Systolic"
-                        min="50"
-                        max="300"
-                        required
-                      />
-                      <span className="flex items-center text-muted-foreground">/</span>
-                      <Input
-                        type="number"
-                        value={formData.bloodPressureDiastolic}
-                        onChange={(e) => setFormData(prev => ({ ...prev, bloodPressureDiastolic: e.target.value }))}
-                        placeholder="Diastolic"
-                        min="30"
-                        max="200"
-                        required
-                      />
-                    </div>
-                    <p className="text-xs text-muted-foreground">Normal: 120/80 mmHg</p>
+                    <Label htmlFor="pulse">Pulse (Nadi) Assessment *</Label>
+                    <Select value={formData.pulse} onValueChange={(value) => setFormData(prev => ({ ...prev, pulse: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select pulse quality" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="vata-pulse">Vata (Irregular, Quick)</SelectItem>
+                        <SelectItem value="pitta-pulse">Pitta (Strong, Jumping)</SelectItem>
+                        <SelectItem value="kapha-pulse">Kapha (Slow, Steady)</SelectItem>
+                        <SelectItem value="weak">Weak</SelectItem>
+                        <SelectItem value="rapid">Rapid</SelectItem>
+                        <SelectItem value="normal">Normal</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="spo2">SPO2 (%) *</Label>
-                    <Input
-                      id="spo2"
-                      type="number"
-                      value={formData.spo2}
-                      onChange={(e) => setFormData(prev => ({ ...prev, spo2: e.target.value }))}
-                      placeholder="Oxygen saturation"
-                      min="50"
-                      max="100"
-                      required
-                    />
-                    <p className="text-xs text-muted-foreground">Normal: 95-100%</p>
+                    <Label htmlFor="tongue">Tongue (Jihva) Examination *</Label>
+                    <Select value={formData.tongue} onValueChange={(value) => setFormData(prev => ({ ...prev, tongue: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select tongue condition" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pink-clean">Pink & Clean</SelectItem>
+                        <SelectItem value="white-coating">White Coating</SelectItem>
+                        <SelectItem value="yellow-coating">Yellow Coating</SelectItem>
+                        <SelectItem value="dry-cracked">Dry & Cracked</SelectItem>
+                        <SelectItem value="red-inflamed">Red & Inflamed</SelectItem>
+                        <SelectItem value="pale">Pale</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="heartRate">Heart Rate (BPM) *</Label>
-                    <Input
-                      id="heartRate"
-                      type="number"
-                      value={formData.heartRate}
-                      onChange={(e) => setFormData(prev => ({ ...prev, heartRate: e.target.value }))}
-                      placeholder="Beats per minute"
-                      min="30"
-                      max="250"
-                      required
-                    />
-                    <p className="text-xs text-muted-foreground">Normal: 60-100 BPM</p>
+                    <Label htmlFor="digestion">Digestive Fire (Agni)</Label>
+                    <Select value={formData.digestion} onValueChange={(value) => setFormData(prev => ({ ...prev, digestion: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select digestion quality" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="strong">Strong (Tikshna Agni)</SelectItem>
+                        <SelectItem value="variable">Variable (Vishama Agni)</SelectItem>
+                        <SelectItem value="slow">Slow (Manda Agni)</SelectItem>
+                        <SelectItem value="normal">Normal (Sama Agni)</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="temperature">Temperature (°F) *</Label>
-                    <Input
-                      id="temperature"
-                      type="number"
-                      step="0.1"
-                      value={formData.temperature}
-                      onChange={(e) => setFormData(prev => ({ ...prev, temperature: e.target.value }))}
-                      placeholder="Body temperature"
-                      min="90"
-                      max="115"
-                      required
-                    />
-                    <p className="text-xs text-muted-foreground">Normal: 98.6°F</p>
+                    <Label htmlFor="sleep">Sleep Quality</Label>
+                    <Select value={formData.sleep} onValueChange={(value) => setFormData(prev => ({ ...prev, sleep: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select sleep pattern" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="sound">Sound & Restful</SelectItem>
+                        <SelectItem value="light">Light Sleep</SelectItem>
+                        <SelectItem value="interrupted">Interrupted</SelectItem>
+                        <SelectItem value="insomnia">Insomnia</SelectItem>
+                        <SelectItem value="excessive">Excessive Sleep</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="sugarLevel">Blood Sugar (mg/dL)</Label>
-                    <Input
-                      id="sugarLevel"
-                      type="number"
-                      value={formData.sugarLevel}
-                      onChange={(e) => setFormData(prev => ({ ...prev, sugarLevel: e.target.value }))}
-                      placeholder="Blood glucose level"
-                      min="30"
-                      max="600"
-                    />
-                    <p className="text-xs text-muted-foreground">Normal: 80-120 mg/dL</p>
+                    <Label htmlFor="appetite">Appetite</Label>
+                    <Select value={formData.appetite} onValueChange={(value) => setFormData(prev => ({ ...prev, appetite: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select appetite level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="strong">Strong</SelectItem>
+                        <SelectItem value="normal">Normal</SelectItem>
+                        <SelectItem value="weak">Weak</SelectItem>
+                        <SelectItem value="irregular">Irregular</SelectItem>
+                        <SelectItem value="excessive">Excessive</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="energy">Energy Level (Ojas)</Label>
+                    <Select value={formData.energy} onValueChange={(value) => setFormData(prev => ({ ...prev, energy: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select energy level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="normal">Normal</SelectItem>
+                        <SelectItem value="low">Low</SelectItem>
+                        <SelectItem value="depleted">Depleted</SelectItem>
+                        <SelectItem value="variable">Variable</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Symptoms */}
+            {/* Symptoms & Lifestyle */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <Stethoscope className="h-5 w-5 text-department-cardiology" />
-                  <span>Symptoms Assessment</span>
+                  <Heart className="h-5 w-5 text-doshaPitta" />
+                  <span>Symptoms & Lifestyle Assessment</span>
                 </CardTitle>
                 <CardDescription>
-                  Select current symptoms and provide additional details
+                  Current symptoms and lifestyle factors affecting health
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label className="text-base font-medium">Common Symptoms</Label>
+                  <Label className="text-base font-medium">Current Symptoms</Label>
                   <p className="text-sm text-muted-foreground mb-4">Select all symptoms that apply</p>
-                  <div className="grid md:grid-cols-3 gap-3">
-                    {commonSymptoms.map((symptom) => (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {ayurvedicSymptoms.map((symptom) => (
                       <div key={symptom} className="flex items-center space-x-2">
                         <Checkbox
                           id={symptom}
@@ -292,18 +332,51 @@ const PatientForm = () => {
                     </div>
                   )}
                 </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="stress">Stress Level</Label>
+                    <Select value={formData.stress} onValueChange={(value) => setFormData(prev => ({ ...prev, stress: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select stress level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="low">Low</SelectItem>
+                        <SelectItem value="moderate">Moderate</SelectItem>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="severe">Severe</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="mood">Mental State</Label>
+                    <Select value={formData.mood} onValueChange={(value) => setFormData(prev => ({ ...prev, mood: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select mental state" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="calm">Calm & Peaceful</SelectItem>
+                        <SelectItem value="anxious">Anxious</SelectItem>
+                        <SelectItem value="irritable">Irritable</SelectItem>
+                        <SelectItem value="depressed">Depressed</SelectItem>
+                        <SelectItem value="restless">Restless</SelectItem>
+                        <SelectItem value="balanced">Balanced</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="symptomsText">Additional Symptoms & Details</Label>
+                  <Label htmlFor="symptomsText">Detailed Symptoms & Health History</Label>
                   <Textarea
                     id="symptomsText"
                     value={formData.symptomsText}
                     onChange={(e) => setFormData(prev => ({ ...prev, symptomsText: e.target.value }))}
-                    placeholder="Describe any additional symptoms, pain levels, duration, or other relevant details..."
-                    rows={4}
+                    placeholder="Describe your symptoms in detail, including onset, duration, triggers, and any previous treatments. Include family history, lifestyle factors, diet patterns, and other relevant health information..."
+                    rows={5}
                   />
                   <p className="text-xs text-muted-foreground">
-                    Our AI will analyze this text to identify key symptoms and severity indicators
+                    Our Ayurvedic AI will analyze this information to determine dosha imbalances and recommend appropriate treatments
                   </p>
                 </div>
               </CardContent>
@@ -314,11 +387,11 @@ const PatientForm = () => {
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 text-muted-foreground">
-                    <Brain className="h-5 w-5" />
-                    <span>AI will analyze this data to predict triage level and recommend department</span>
+                    <Leaf className="h-5 w-5 text-treatmentHerbs" />
+                    <span>Ayurvedic AI will analyze doshas and recommend personalized treatment</span>
                   </div>
-                  <Button type="submit" size="lg" className="bg-primary hover:bg-primary-hover">
-                    Submit for AI Evaluation
+                  <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90">
+                    Submit for Ayurvedic Assessment
                   </Button>
                 </div>
               </CardContent>
